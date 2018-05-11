@@ -1,3 +1,2 @@
-SELECT name, img
-FROM Users
-WHERE id = $1;
+SELECT name, img, id
+FROM Users;

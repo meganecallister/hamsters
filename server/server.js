@@ -83,8 +83,24 @@ app.get('/auth/nope', function(req, res) {
 
 app.get('/displayHamsters', (req, res) => {
     const db = req.app.get('db');
-    db.view_users([req.session.passport.user]).then((hamsters) => {
+    db.view_users([req.session.passport.user.id]).then((hamsters) => {
         res.status(200).send(hamsters);
+    })
+})
+
+app.delete('/deleteHamster/:id', (req, res) => {
+    const db = req.app.get('db');
+    db.delete_user([req.params.id])
+    .then((newUserList) => {
+        res.send(newUserList);
+    })
+})
+
+app.get('/displayFavs/:id', (req, res) => {
+    const db = req.app.get('db');
+    db.view_favs([req.session.passport.user.id, req.params.id])
+    .then((favs) => {
+        res.status(200).send(favs);
     })
 })
 
