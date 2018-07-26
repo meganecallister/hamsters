@@ -8,7 +8,7 @@ class Nav extends Component {
             <div className='nav'>
                 <h1>Hamsters</h1>
                 <Link to='/home'><button>Home</button></Link>
-                <Link to='/profile'><button>Profile</button></Link>
+                <Link to='/profile/0'><button>Profile</button></Link>
                 <Link to='/'><button>Log out</button></Link>
             </div>
         )

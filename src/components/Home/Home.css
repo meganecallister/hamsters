@@ -15,11 +15,12 @@
     flex-wrap: wrap;
     justify-content: flex-start;
     align-items: flex-start;
+    overflow: auto;
 }
 .eachHamster {
     background: blue;
     background: white;
-    height: 100px;
+    height: 150px;
     margin: 10px;
 }
 .eachHamster img {
@@ -30,6 +31,13 @@
 .eachHamster p {
     margin: 0;
     font-size: 14px;
+    color: black;
+    text-align: center;
+}
+.eachFav {
+    background: red;
+    margin: 0;
+    font-size: 30px;
     color: black;
     text-align: center;
 }

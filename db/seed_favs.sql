@@ -3,16 +3,17 @@ DROP TABLE IF EXISTS Favs;
 CREATE TABLE Favs (
     id SERIAL PRIMARY KEY,
     food TEXT,
-    hobby TEXT
+    hobby TEXT,
+    eatOrSleep TEXT
 );
 
-INSERT INTO Favs ( food, hobby )
+INSERT INTO Favs ( food, hobby, eatOrSleep )
 VALUES
-('Carrots', 'Napping'),
-('Lettuce', 'Climbing'),
-('Seeds', 'Burrowing'),
-('Apples', 'Exploring'),
-('Spinach', 'Running'),
-('Celery', 'Cuddling'),
-('Pellets', 'People watching'),
-('Cucumbers', 'Nibbling');
+('Carrots', 'Napping', 'eat'),
+('Lettuce', 'Climbing', 'sleep'),
+('Seeds', 'Burrowing', 'eat'),
+('Apples', 'Exploring', 'eat'),
+('Spinach', 'Running', 'sleep'),
+('Celery', 'Cuddling', 'eat'),
+('Pellets', 'People watching', 'sleep'),
+('Cucumbers', 'Nibbling', 'sleep');

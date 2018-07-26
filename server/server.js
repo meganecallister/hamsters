@@ -67,6 +67,8 @@ passport.deserializeUser((id, done) => {
     })
 })
 
+app.use( express.static( `${__dirname}/../build` ) );
+
 app.get('/auth', passport.authenticate('auth0'))
 app.get('/auth/callback', passport.authenticate('auth0', {
     successRedirect: SUCCESS_REDIRECT,
@@ -83,12 +85,22 @@ app.get('/auth/nope', function(req, res) {
 
 app.get('/displayHamsters', (req, res) => {
     const db = req.app.get('db');
-    db.view_users([req.session.passport.user.id]).then((hamsters) => {
+    db.view_users([req.user.id]).then((hamsters) => {
         res.status(200).send(hamsters);
     })
 })
 
-app.delete('/deleteHamster/:id', (req, res) => {
+// This should pass off request level middleware
+
+function checkAdmin(req, res, next) {
+    if (req.user.admin) {
+        next();
+    } else {
+        res.send(401).send('Oh no you did not!');
+    }
+}
+
+app.delete('/deleteHamster/:id', checkAdmin, (req, res) => {
     const db = req.app.get('db');
     db.delete_user([req.params.id])
     .then((newUserList) => {
@@ -98,11 +110,61 @@ app.delete('/deleteHamster/:id', (req, res) => {
 
 app.get('/displayFavs/:id', (req, res) => {
     const db = req.app.get('db');
-    db.view_favs([req.session.passport.user.id, req.params.id])
+    db.view_favs([req.user.id, req.params.id])
     .then((favs) => {
         res.status(200).send(favs);
     })
 })
+
+app.put('/updateHobby/:id', (req, res) => {
+    // console.log('req.params.id => ', req.params.id)
+    // console.log('req.body.hobby => ', req.body.hobby)
+    const db = req.app.get('db');
+        db.update_hobby([req.body.hobby, req.params.id])
+        .then((newHobby) => {
+            res.send(newHobby);
+    })
+})
+
+app.get('/api/info', (req, res) => {
+    const db = req.app.get('db');
+    db.view_info([req.query.name])
+    .then((info) => {
+        res.status(200).send(info);
+    })
+})
+
+app.get('/api/hamData/:id', (req, res) => {
+    console.log('req.params.id => ', req.params.id)
+    const db = req.app.get('db');
+    db.find_ham_data([req.params.id])
+    .then((hamData) => {
+        res.status(200).send(hamData);
+        console.log(hamData)
+    })
+})
+
+
+
+// // server
+// app.get('/api/user')
+// req.queries.username
+
+// app.get('/hamstersThatEat', (req, res) => {
+//     const db = req.app.get('db');
+//     db.view_eaters([req.user.id])
+//     .then((eaters) => {
+//         res.status(200).send(eaters);
+//     })
+// })
+
+// app.get('/hamstersThatSleep', (req, res) => {
+//     const db = req.app.get('db');
+//     db.view_sleepers([req.user.id])
+//     .then((sleepers) => {
+//         res.status(200).send(sleepers);
+//     })
+// })
 
 app.get('/auth/logout', (req, res) => {
     req.logOut();
