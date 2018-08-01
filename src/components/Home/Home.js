@@ -11,10 +11,7 @@ class Home extends Component {
         this.state = {
             hamsters: [],
             favs: [],
-            // user_id: props.match.params.user_id,
-            // food: '',
             hobby: '',
-            // showFavs: false
             hamName: '',
             info: []
         }
@@ -31,10 +28,6 @@ class Home extends Component {
             console.log(err);
         });
     }
-
-    // updateFood(e) {
-    //     this.setState({food: e});
-    // }
 
     updateHobby(e) {
         this.setState({hobby: e})
@@ -110,7 +103,6 @@ class Home extends Component {
 
                     <Link to={`/profile/${e.id}`}><p>{e.name}</p></Link>
                     
-                    {/* <input onChange={ e => this.updateFood( e.target.value ) } type='text' placeholder='food'/> */}
                     <input onChange={ e => this.updateHobby( e.target.value ) } type='text' placeholder='Hobby'/>
                     <button onClick={() => this.handleUpdate(e.id)}>Edit</button>
                     <button onClick={() => this.deleteHamster(e.id)}>Delete</button>
@@ -150,19 +142,10 @@ class Home extends Component {
 
                 <div className='hamsterList'>
                     { hammies }
-                    {/* {favvies} */}
-                    {/* {this.state.favs} */}
                     
                     <div id="favsModal" style={{display: 'none'}}>
                         <div className='modal-content'>
                             <p>{favorites}</p>
-
-                            {/* <FriendInfo
-                                friendsList={this.state.friendsList}
-                                friendInfo={this.state.friendInfo}
-                                closeModal={this.closeModal}
-                                handleDelete={this.handleDelete}
-                            /> */}
                         </div>
                     </div> 
 
